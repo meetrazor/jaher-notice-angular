@@ -1,0 +1,130 @@
+@import "./scss/bootstrap-variables";
+@import "./../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "./scss/bootstrap-essentials-variables";
+@import "./../node_modules/bootstrap-essentials/dist/css/bootstrap-essentials.css";
+@import "./../node_modules/admin-lte-css/dist/css/AdminLTE.css";
+@import "~ngx-toastr/toastr";
+@import "./scss/admin-lte-skin";
+
+@import "./../node_modules/font-awesome/css/font-awesome.css";
+
+.sidebar-menu li span {
+  padding-left: 8px;
+}
+
+.box {
+  margin-top: 20px;
+  .box-header {
+    line-height: 2.5;
+    padding: 15px;
+    > .box-tools {
+      top: 10px;
+    }
+  }
+
+  .box-body {
+    padding: 20px;
+  }
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  margin-bottom: 0;
+  /* Hide default HTML checkbox */
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
+
+  input:checked + .slider {
+    background-color: $brand-primary;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px $brand-primary;
+  }
+
+  input:checked + .slider:before {
+    -webkit-transform: translateX(15px);
+    -ms-transform: translateX(15px);
+    transform: translateX(15px);
+  }
+
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+}
+
+table.dataTable {
+  th {
+    &:first-child,
+    &:last-child {
+      width: 15%;
+    }
+  }
+
+  tr {
+    &.bg-danger,
+    &.bg-danger:hover {
+      background-color: #f9bdbb;
+    }
+
+    td {
+      vertical-align: middle;
+      .btn {
+        margin-right: 15px;
+      }
+    }
+  }
+}
+
+.margin-auto {
+  margin: auto;
+}
+
+.sidebar-right-toggle {
+  display: none;
+}
+
+.btn-border {
+  border-color: lightgray;
+}
+
+.gray-dark {
+  color: lighten(#000, 13.5%);
+}

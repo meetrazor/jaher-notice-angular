@@ -1,0 +1,81 @@
+h4 {
+  margin: 2px;
+  padding: 2px;
+}
+a {
+  outline: none;
+}
+map > area,
+map > area:active,
+map > area:focus {
+  outline: none;
+  border: 0;
+}
+.investment a {
+  color: #fff;
+  text-decoration: none;
+}
+a:hover {
+  color: #a83726;
+}
+.socoail {
+  display: inline;
+  float: right;
+}
+.socoail ul {
+  margin: 0px;
+  padding: 0px;
+}
+.socoail li {
+  display: inline;
+  list-style: none;
+  padding-right: 5px;
+}
+.socoail a {
+  text-decoration: none;
+}
+.socoail a:hover {
+  background: url("http://admin.jahernotice.com/assets/images//Facebook_Blue.png");
+}
+@media only screen and (min-width: 0) and (max-width: 481px) {
+  img {
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+  }
+  a {
+    outline: none;
+  }
+  map > area,
+  map > area:active,
+  map > area:focus {
+    outline: none;
+    border: 0;
+  }
+  .investment a {
+    color: #fff;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #a83726;
+  }
+}
+a {
+  color: #000;
+}
+a:hover {
+  color: #a83726;
+}
+a {
+  outline: none;
+}
+map > area,
+map > area:active,
+map > area:focus {
+  outline: none;
+  border: 0;
+}
+.investment a {
+  color: #fff;
+  text-decoration: none;
+}

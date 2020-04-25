@@ -1,0 +1,22 @@
+<ng-container *ngIf="customLayout; else noCustomLayout">
+	<router-outlet></router-outlet>
+</ng-container>
+<ng-template #noCustomLayout>
+	<mk-layout-wrapper>
+		<mk-layout-header logoLink="/upload-excel">
+			<mk-layout-header-logo><b><img src="/assets/Jahernotice_logo.png" alt="Logo Image"></b></mk-layout-header-logo>
+			<mk-layout-header-logo-mini>
+				<div class="min-icon">
+					<img src="/assets/favicon-jahernotice.png" alt="User Image">
+				</div>
+			</mk-layout-header-logo-mini>
+			<app-header></app-header>
+		</mk-layout-header>
+		<mk-layout-sidebar-left>
+			<app-sidebar-left-inner></app-sidebar-left-inner>
+		</mk-layout-sidebar-left>
+		<mk-layout-content>
+			<router-outlet></router-outlet>
+		</mk-layout-content>
+	</mk-layout-wrapper>
+</ng-template>

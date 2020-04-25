@@ -1,0 +1,361 @@
+<section class="main p-5">
+  <div class="">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group hr p-4 pb-5" *ngIf="!URLs.length">
+          <label for="image">Select Image file*</label>
+          <input
+            type="file"
+            id="image"
+            #selectedImages
+            class="form-control"
+            webkitdirectory
+            accept="images/*"
+            (change)="onSelectFile($event)"
+            multiple
+          />
+        </div>
+        <div class="form-group text-center zoom-img" *ngIf="URLs.length > 0">
+          <div>
+            <input
+              type="number"
+              min="1"
+              [max]="URLs.length"
+              [(ngModel)]="imageNumber"
+              (change)="imageNumberChange()"
+              class="index"
+            />
+          </div>
+          <button
+            *ngIf="imageGallery.length - 1 > index"
+            class="close"
+            (click)="next()"
+          >
+            next <i class="fa fa-arrow-right" aria-hidden="true"></i>
+          </button>
+
+          <button
+            *ngIf="index > 0"
+            class="close"
+            style="float: left;"
+            (click)="privious()"
+          >
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> privious
+          </button>
+          <img
+            class="img-thumbnail mt-2"
+            [src]="URLs[index]"
+            style="max-height: 80vh;"
+          />
+        </div>
+      </div>
+      <div class="col-md-6 hr p-5">
+        <div class="form-group">
+          <label>Sr. No.*</label>
+          <input
+            type="number"
+            name="srno"
+            placeholder="Serial Number"
+            [(ngModel)]="uploadObject.srno"
+            class="form-control"
+            #srno="ngModel"
+            required
+          />
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Published Date*</label>
+                  <input
+                    type="date"
+                    name="pdate"
+                    #pdate="ngModel"
+                    class="form-control"
+                    [(ngModel)]="uploadObject.publish_date"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Notification Date*</label>
+                  <input
+                    type="date"
+                    name="ndate"
+                    #ndate="ngModel"
+                    class="form-control"
+                    [(ngModel)]="uploadObject.notification_date"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>District*</label>
+                  <select
+                    class="form-control"
+                    [(ngModel)]="district2"
+                    name="dist"
+                    (change)="selectDistrict($event.target.value)"
+                    required
+                    ><option value="" disabled>--select--</option>
+                    <option
+                      *ngFor="let district of District"
+                      value="{{ district | json }}"
+                    >
+                      {{ district.districtname }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Taluka*</label>
+                  <select
+                    class="form-control"
+                    name="taluka"
+                    [(ngModel)]="taluka2"
+                    (change)="selectTaluka($event.target.value)"
+                    required
+                    ><option value="" disabled>--select--</option>
+                    <option
+                      *ngFor="let Taluka of taluka"
+                      value="{{ Taluka | json }}"
+                    >
+                      {{ Taluka.blockname }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Village*</label>
+                  <select
+                    class="form-control"
+                    name="village"
+                    [(ngModel)]="village2"
+                    (change)="selectVillage($event.target.value)"
+                    required
+                    ><option value="" disabled>--select--</option>
+                    <option
+                      *ngFor="let Village of village"
+                      value="{{ Village | json }}"
+                    >
+                      {{ Village.villagename }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="Surveyno">Survey / Block No. </label>
+                  <input
+                    type="text"
+                    name="survey_plot"
+                    class="form-control"
+                    id="Surveyno"
+                    [(ngModel)]="uploadObject.survey_block_no"
+                    #survey="ngModel"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="tp">T P No.</label>
+                <input
+                  type="text"
+                  name="tpno"
+                  #tpno="ngModel"
+                  class="form-control"
+                  id="tp"
+                  [(ngModel)]="uploadObject.tp_no"
+                />
+              </div>
+              <div class="col-sm-6">
+                <label for="fp">F P No.</label>
+                <input
+                  type="text"
+                  name="fpno"
+                  #fpno="ngModel"
+                  class="form-control"
+                  id="fp"
+                  [(ngModel)]="uploadObject.fp_no"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Society/Appartment*</label>
+                  <select
+                    class="form-control"
+                    name="society"
+                    [(ngModel)]="uploadObject.society_appartment"
+                    required
+                    ><option value="" disabled>--select--</option>
+                    <option
+                      *ngFor="let Society of societyAppartment"
+                      value="{{ Society.societyname }}"
+                    >
+                      {{ Society.societyname }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="plotno">Building No. / Plot no </label>
+                  <input
+                    type="text"
+                    name="building_plot"
+                    class="form-control"
+                    id="plotno"
+                    [(ngModel)]="uploadObject.building_plot"
+                    #plot="ngModel"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Notification Source*</label>
+                  <select
+                    class="form-control"
+                    name="notificationsource"
+                    [(ngModel)]="source2"
+                    (change)="sourceSelect($event.target.value)"
+                    required
+                    ><option value="" disabled>--select--</option>
+                    <option
+                      *ngFor="let newsPaper of newsPapers"
+                      value="{{ newsPaper | json }}"
+                    >
+                      {{ newsPaper.papername }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Notification By (Lawyer etc., )*</label>
+                  <ng-autocomplete
+                    id="autocomp"
+                    style="width: inherit;"
+                    name="auto"
+                    [data]="lawyers"
+                    [searchKeyword]="keyword"
+                    placeHolder="Enter the Lawyer Name"
+                    (inputChanged)="onChangeSearch($event)"
+                    (selected)="selectEvent($event)"
+                    [itemTemplate]="itemTemplate"
+                    [notFoundTemplate]="notFoundTemplate"
+                    [(ngModel)]="law2"
+                    class="form-control p-0"
+                  >
+                  </ng-autocomplete>
+
+                  <ng-template #itemTemplate let-item class="">
+                    <a [innerHTML]="item.name"></a>
+                  </ng-template>
+
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Client Name*</label>
+                  <input
+                    type="text"
+                    name="clientname"
+                    class="form-control"
+                    placeholder="Client Name"
+                    #cname="ngModel"
+                    [(ngModel)]="uploadObject.client_name"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Notice Type*</label>
+                  <select
+                    class="form-control"
+                    name="type"
+                    [(ngModel)]="by2"
+                    (change)="noticeSelect($event.target.value)"
+                    required
+                    ><option value="" disabled>--select--</option>
+                    <option
+                      *ngFor="let type of noticeTypes"
+                      value="{{ type.notice_type }}"
+                    >
+                      {{ type.notice_type }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label
+                    >Add Another Notice for Same Image?
+                    <input
+                      type="checkbox"
+                      name="same"
+                      id="same"
+                      [(ngModel)]="anotherNotice"
+                  /></label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group text-center">
+                  <button
+                    class="btn btn-primary btn-block btn-flat mt-2"
+                    (click)="upload()"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group text-center">
+                  <button
+                    class="btn btn-primary btn-block btn-flat mt-2"
+                    (click)="reset()"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group text-center">
+                  <button
+                    class="btn btn-primary btn-block btn-flat mt-2"
+                    (click)="removeImages()"
+                  >
+                    Remove all Images
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
