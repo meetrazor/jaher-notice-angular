@@ -1,3 +1,4 @@
+import { SocietyComponent } from './addnew/society/society.component';
 import { NotificationComponent } from './notification/notification.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -43,7 +44,12 @@ const routes: Routes = [
       customLayout: true,
     },
     component: NotificationComponent
-
+  }, {
+    path: 'society',
+    data: {
+      customLayout: true,
+    },
+    component: SocietyComponent
   },
 ];
 

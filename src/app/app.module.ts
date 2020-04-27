@@ -1,3 +1,4 @@
+import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LayoutModule } from 'angular-admin-lte';
@@ -13,22 +14,27 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TemplateComponent } from './template/template.component';
 import { NotificationComponent } from './notification/notification.component';
+import { DataTablesModule } from 'angular-datatables';
+import { ButtonsModule } from '@progress/kendo-angular-buttons';
+import { DatePipe } from '@angular/common';
+import { SocietyComponent } from './addnew/society/society.component';
+import { LawyerComponent } from './addnew/lawyer/lawyer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent, TemplateComponent, NotificationComponent
+    DashboardComponent, TemplateComponent, NotificationComponent, SocietyComponent, LawyerComponent
   ],
   imports: [
-    BrowserModule, CoreModule, FormsModule, AutocompleteLibModule,
+    BrowserModule, CoreModule, FormsModule, AutocompleteLibModule, DataTablesModule, DialogsModule, ButtonsModule,
     AppRoutingModule, LayoutModule.forRoot(adminLteConf), ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }), BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

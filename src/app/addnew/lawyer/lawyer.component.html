@@ -1,0 +1,153 @@
+<section>
+  <div class="row p-5">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="name">Lawyer Name*</label>
+        <input
+          type="text"
+          [(ngModel)]="uploadObject.name"
+          name="name"
+          class="form-control"
+          placeholder="Society Name"
+          id="name"
+        />
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>Category</label>
+        <select
+          class="form-control"
+          name="dist"
+          [(ngModel)]="uploadObject.flag"
+          (change)="onDistrictChange($event.target.value)"
+          required
+          ><option value="" disabled>--select--</option>
+          <option *ngFor="let category of Category" value="{{ category.id }}">
+            {{ category.category }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="mno">Mobile No</label>
+        <input
+          type="number"
+          [(ngModel)]="uploadObject.contact_no"
+          name="name"
+          class="form-control"
+          placeholder="Mobile Number"
+          id="mno"
+        />
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="lno">Landline No</label>
+        <input
+          type="number"
+          [(ngModel)]="uploadObject.landline_no"
+          name="name"
+          class="form-control"
+          placeholder="Landline Number"
+          id="lno"
+        />
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="fno">Fax No</label>
+        <input
+          type="text"
+          [(ngModel)]="uploadObject.fax"
+          name="name"
+          class="form-control"
+          placeholder="Fax Number"
+          id="fno"
+        />
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          [(ngModel)]="uploadObject.email"
+          name="name"
+          class="form-control"
+          placeholder="Email Id"
+          id="email"
+        />
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="add">Address</label>
+        <textarea
+          class="form-control"
+          name=""
+          id="add"
+          [(ngModel)]="uploadObject.address"
+          rows="3"
+        ></textarea>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>District*</label>
+        <select
+          class="form-control"
+          name="dist"
+          [(ngModel)]="uploadObject.district"
+          (change)="onDistrictChange($event.target.value)"
+          required
+          ><option value="" disabled>--select--</option>
+          <option
+            *ngFor="let District of district"
+            value="{{ District.districtname }}"
+          >
+            {{ District.districtname }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="pno">Pincode</label>
+        <input
+          type="number"
+          [(ngModel)]="uploadObject.pincode"
+          name="pcode"
+          class="form-control"
+          placeholder="Pincode"
+          id="pno"
+        />
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group text-center">
+            <button
+              class="btn btn-primary btn-block btn-flat mt-2"
+              (click)="submit()"
+            >
+              Add Lawyer
+            </button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group text-center">
+            <button
+              class="btn btn-primary btn-block btn-flat mt-2"
+              (click)="closePopUp('close')"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,1 +1,36 @@
-<p>notification works!</p>
+<div
+  class="table-responsive p-5 text-center"
+  style="background-color: #d2d6de; min-height: 100%;"
+>
+  <table
+    datatable
+    [dtOptions]="dtOptions"
+    [dtTrigger]="dtTrigger"
+    class="table table-bordered table-hover"
+    width="100%"
+  ></table>
+</div>
+
+<kendo-dialog
+  *ngIf="opened"
+  (close)="close('cancel')"
+  [minWidth]="250"
+  [maxWidth]="1280"
+  [maxHeight]="720"
+>
+  <div class="text-center">
+    <span class="close" (click)="close('cancel')">&times;</span>
+    <img class="img-thumbnail" [src]="image" alt="image" />
+  </div>
+</kendo-dialog>
+<div kendoDialogContainer></div>
+
+<kendo-dialog
+  *ngIf="edit"
+  (close)="editclose('cancel')"
+  [minWidth]="1280"
+  [maxWidth]="1280"
+  [maxHeight]="720"
+>
+  <app-dashboard [id]="id" (sendMessage)="editclose($event)"></app-dashboard>
+</kendo-dialog>

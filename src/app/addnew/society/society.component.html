@@ -1,0 +1,89 @@
+<section>
+  <div class="row p-5">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="Surveyno">Society Name*</label>
+        <input
+          type="text"
+          [(ngModel)]="uploadObject.societyname"
+          name="survey_plot"
+          class="form-control"
+          placeholder="Society Name"
+          id="Surveyno"
+        />
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>District*</label>
+        <select
+          class="form-control"
+          name="dist"
+          [(ngModel)]="uploadObject.districtid"
+          (change)="onDistrictChange($event.target.value)"
+          required
+          ><option value="" disabled>--select--</option>
+          <option *ngFor="let District of district" value="{{ District.id }}">
+            {{ District.districtname }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>Taluka*</label>
+        <select
+          class="form-control"
+          name="taluka"
+          required
+          [(ngModel)]="uploadObject.talukaid"
+          (change)="onTalukaChange($event.target.value)"
+          ><option value="" disabled>--select--</option>
+          <option *ngFor="let Taluka of taluka" value="{{ Taluka.id }}">
+            {{ Taluka.blockname }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>Village*</label>
+        <select
+          class="form-control"
+          name="village"
+          required
+          [(ngModel)]="uploadObject.villageid"
+          ><option value="" disabled>--select--</option>
+          <option *ngFor="let Village of village" value="{{ Village.id }}">
+            {{ Village.villagename }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group text-center">
+            <button
+              class="btn btn-primary btn-block btn-flat mt-2"
+              (click)="submit()"
+            >
+              Add Society
+            </button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group text-center">
+            <button
+              class="btn btn-primary btn-block btn-flat mt-2"
+              (click)="closePopUp('close')"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

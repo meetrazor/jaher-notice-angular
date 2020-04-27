@@ -1,7 +1,30 @@
-<section class="main p-5">
+<section class="main p-5" *ngIf="!loading || !id">
   <div class="">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="id">
+        <div class="form-group hr p-4 pb-5" *ngIf="!image">
+          <label for="image">Select Image file*</label>
+          <input
+            type="file"
+            id="image"
+            #selectedImages
+            class="form-control"
+            accept="images/*"
+            (change)="onUpdateFile($event)"
+          />
+        </div>
+        <div class="form-group text-center zoom-img" *ngIf="image">
+          <button class="close" (click)="removeImages()">
+            &times;
+          </button>
+          <img
+            class="img-thumbnail mt-2"
+            [src]="image"
+            style="max-height: 80vh;"
+          />
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="!id">
         <div class="form-group hr p-4 pb-5" *ngIf="!URLs.length">
           <label for="image">Select Image file*</label>
           <input
@@ -193,21 +216,35 @@
             </div>
             <div class="row">
               <div class="col-md-6">
-                <div class="form-group">
-                  <label>Society/Appartment*</label>
-                  <select
-                    class="form-control"
-                    name="society"
-                    [(ngModel)]="uploadObject.society_appartment"
-                    required
-                    ><option value="" disabled>--select--</option>
-                    <option
-                      *ngFor="let Society of societyAppartment"
-                      value="{{ Society.societyname }}"
-                    >
-                      {{ Society.societyname }}
-                    </option>
-                  </select>
+                <label>Society/Appartment*</label>
+                <div class="row">
+                  <div class="col-md-10 col-sm-10">
+                    <div class="form-group">
+                      <select
+                        class="form-control"
+                        name="society"
+                        [(ngModel)]="uploadObject.society_appartment"
+                        required
+                        ><option value="" disabled>--select--</option>
+                        <option
+                          *ngFor="let Society of societyAppartment"
+                          value="{{ Society.societyname }}"
+                        >
+                          {{ Society.societyname }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-sm-2 pl-0 pr-0">
+                    <div class="form-group text-center">
+                      <a
+                        title="Add New Society"
+                        (click)="newSociety = true"
+                        class="btn btn-primary form-control"
+                        ><i class="fa fa-plus" aria-hidden="true"></i
+                      ></a>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-md-6">
@@ -246,31 +283,45 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group">
-                  <label>Notification By (Lawyer etc., )*</label>
-                  <ng-autocomplete
-                    id="autocomp"
-                    style="width: inherit;"
-                    name="auto"
-                    [data]="lawyers"
-                    [searchKeyword]="keyword"
-                    placeHolder="Enter the Lawyer Name"
-                    (inputChanged)="onChangeSearch($event)"
-                    (selected)="selectEvent($event)"
-                    [itemTemplate]="itemTemplate"
-                    [notFoundTemplate]="notFoundTemplate"
-                    [(ngModel)]="law2"
-                    class="form-control p-0"
-                  >
-                  </ng-autocomplete>
+                <label>Notification By (Lawyer etc., )*</label>
+                <div class="row">
+                  <div class="col-md-10 col-sm-10">
+                    <div class="form-group">
+                      <ng-autocomplete
+                        id="autocomp"
+                        style="width: inherit;"
+                        name="auto"
+                        [data]="lawyers"
+                        [searchKeyword]="keyword"
+                        placeHolder="Enter the Lawyer Name"
+                        (inputChanged)="onChangeSearch($event)"
+                        (selected)="selectEvent($event)"
+                        [itemTemplate]="itemTemplate"
+                        [notFoundTemplate]="notFoundTemplate"
+                        [(ngModel)]="law2"
+                        class="form-control p-0"
+                      >
+                      </ng-autocomplete>
 
-                  <ng-template #itemTemplate let-item class="">
-                    <a [innerHTML]="item.name"></a>
-                  </ng-template>
+                      <ng-template #itemTemplate let-item class="">
+                        <a [innerHTML]="item.name"></a>
+                      </ng-template>
 
-                  <ng-template #notFoundTemplate let-notFound>
-                    <div [innerHTML]="notFound"></div>
-                  </ng-template>
+                      <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-sm-2 pl-0 pr-0">
+                    <div class="form-group text-center">
+                      <a
+                        title="Add New Lawyer"
+                        (click)="newlawyer = true"
+                        class="btn btn-primary form-control"
+                        ><i class="fa fa-plus" aria-hidden="true"></i
+                      ></a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -308,7 +359,7 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-12">
+              <div class="col-md-12" *ngIf="!id">
                 <div class="form-group">
                   <label
                     >Add Another Notice for Same Image?
@@ -322,7 +373,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-4" *ngIf="!id">
                 <div class="form-group text-center">
                   <button
                     class="btn btn-primary btn-block btn-flat mt-2"
@@ -332,7 +383,7 @@
                   </button>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-4" *ngIf="!id">
                 <div class="form-group text-center">
                   <button
                     class="btn btn-primary btn-block btn-flat mt-2"
@@ -342,13 +393,33 @@
                   </button>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-4" *ngIf="!id">
                 <div class="form-group text-center">
                   <button
                     class="btn btn-primary btn-block btn-flat mt-2"
                     (click)="removeImages()"
                   >
                     Remove all Images
+                  </button>
+                </div>
+              </div>
+              <div class="col-md-4" *ngIf="id">
+                <div class="form-group text-center">
+                  <button
+                    class="btn btn-primary btn-block btn-flat mt-2"
+                    (click)="update()"
+                  >
+                    Update
+                  </button>
+                </div>
+              </div>
+              <div class="col-md-4" *ngIf="id">
+                <div class="form-group text-center">
+                  <button
+                    class="btn btn-primary btn-block btn-flat mt-2"
+                    (click)="closePopUp('close')"
+                  >
+                    Cancel
                   </button>
                 </div>
               </div>
@@ -359,3 +430,24 @@
     </div>
   </div>
 </section>
+<kendo-dialog
+  title="Add New Society"
+  *ngIf="newSociety"
+  (close)="societyclose('cancel')"
+  [minWidth]="600"
+  [maxWidth]="600"
+  [maxHeight]="720"
+>
+  <app-society (sendMessage)="societyclose($event)"></app-society>
+</kendo-dialog>
+
+<kendo-dialog
+  title="Add New Lawyer"
+  *ngIf="newlawyer"
+  (close)="lawyerclose('cancel')"
+  [minWidth]="600"
+  [maxWidth]="600"
+  [maxHeight]="720"
+>
+  <app-lawyer (sendMessage)="lawyerclose($event)"></app-lawyer>
+</kendo-dialog>
