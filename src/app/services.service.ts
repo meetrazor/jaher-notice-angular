@@ -104,8 +104,8 @@ export class ServicesService {
     formData.append('notifyby', data.notification_by);
     formData.append('client_names', data.client_name);
     formData.append('notice_type', data.notice_type);
-    formData.append('original_image_path', data.image_path);
     if (data.image) {
+      formData.append('original_image_path', data.image_path);
       formData.append('Image', data.image, data.image.name);
     }
     return this.http.put(upload + '/' + id, formData, httpFileUploadOptions);

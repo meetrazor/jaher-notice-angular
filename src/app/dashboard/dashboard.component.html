@@ -18,6 +18,7 @@
             &times;
           </button>
           <img
+            (error)="removeImages()"
             class="img-thumbnail mt-2"
             [src]="image"
             style="max-height: 80vh;"

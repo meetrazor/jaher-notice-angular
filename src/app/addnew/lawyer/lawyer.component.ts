@@ -23,7 +23,8 @@ export class LawyerComponent implements OnInit {
     fax: string,
     email: string,
     address: string,
-    pincode: string
+    pincode: string,
+    taluka: string
   };
   constructor(private service: ServicesService, private toastr: ToastrService) { }
 
@@ -39,7 +40,8 @@ export class LawyerComponent implements OnInit {
       fax: '',
       email: '',
       address: '',
-      pincode: ''
+      pincode: '',
+      taluka: ',',
     };
     this.service.getDistrict().subscribe(R => {
       this.district = R;
@@ -52,15 +54,15 @@ export class LawyerComponent implements OnInit {
   submit() {
 
     // tslint:disable-next-line: max-line-length
-    if ((this.uploadObject.name)) {
-      // this.service.addnewLawyer(this.uploadObject).subscribe((r) => {
-      //   this.toastr.success(r.message, 'Success');
-      //   console.log(r);
+    if ((this.uploadObject.name) && (this.uploadObject.address) && (this.uploadObject.contact_no) && (this.uploadObject.district) && (this.uploadObject.email) && (this.uploadObject.pincode)) {
+      this.service.addnewLawyer(this.uploadObject).subscribe((r) => {
+        this.toastr.success(r.message, 'Success');
+        console.log(r);
 
-      //   this.closePopUp('refresh');
-      // });
+        this.closePopUp('refresh');
+      });
     } else {
-      this.toastr.error('Lawyer Name Is mandatory', 'Error');
+      this.toastr.error('All (*) mark fileds are mandatory', 'Error');
     }
   }
   closePopUp(status) {
