@@ -31,7 +31,7 @@ import { LawyerComponent } from './addnew/lawyer/lawyer.component';
     AppRoutingModule, LayoutModule.forRoot(adminLteConf), ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-top-right',
-      preventDuplicates: true,
+      preventDuplicates: false,
     }), BrowserAnimationsModule
   ],
   providers: [DatePipe],

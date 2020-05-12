@@ -13,6 +13,7 @@ const httpFileUploadOptions = {
 };
 
 const apiUrl = 'http://qa.api.jahernotice.com/api2';
+// const apiUrl = 'http://devapi.jahernotice.com/api2';
 const district = `${apiUrl}/District`;
 const taluka = `${apiUrl}/Taluka/`;
 const village = `${apiUrl}/Village/`;
@@ -24,6 +25,7 @@ const upload = `${apiUrl}/NornalNotice`;
 const society = `${apiUrl}/Society`;
 const newlawyer = `${apiUrl}/Lawyer`;
 const approve = `${apiUrl}/ApprovedNornalNotice`;
+const fulltaluka = `${apiUrl}/Taluka`;
 
 @Injectable({
   providedIn: 'root'
@@ -33,26 +35,26 @@ export class ServicesService {
   constructor(private http: HttpClient) { }
 
   getDistrict() {
-    return this.http.get(district, httpOptions);
+    return this.http.get(district + '?verified=1', httpOptions);
   }
 
   getTaluka(District) {
-    return this.http.get(taluka + District, httpOptions);
+    return this.http.get(taluka + District + '?verified=1', httpOptions);
   }
 
   getVllage(Taluka) {
-    return this.http.get(village + Taluka, httpOptions);
+    return this.http.get(village + Taluka + '?verified=1', httpOptions);
   }
 
   getSocietyAppartment(Village) {
-    return this.http.get(societyAppartment + Village, httpOptions);
+    return this.http.get(societyAppartment + Village + '?verified=1', httpOptions);
   }
 
   getNewsPaper() {
     return this.http.get(newspaper, httpOptions);
   }
   getLawyer(key) {
-    return this.http.get(lawyer + key, httpOptions);
+    return this.http.get(lawyer + key + '?verified=1', httpOptions);
   }
 
   getNoticeType() {
@@ -122,6 +124,9 @@ export class ServicesService {
   }
   deleteNormalNotice(id): any {
     return this.http.delete(upload + '/' + id, httpOptions);
+  }
+  getAllTakula(): any {
+    return this.http.get(fulltaluka + '?verified=1', httpOptions);
   }
 }
 

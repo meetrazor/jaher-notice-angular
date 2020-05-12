@@ -55,7 +55,7 @@
             class="close"
             (click)="next()"
           >
-            next <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
           </button>
 
           <button
@@ -64,7 +64,7 @@
             style="float: left;"
             (click)="privious()"
           >
-            <i class="fa fa-arrow-left" aria-hidden="true"></i> privious
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Previous
           </button>
           <img
             class="img-thumbnail mt-2"
@@ -124,9 +124,21 @@
                     class="form-control"
                     [(ngModel)]="district2"
                     name="dist"
+                    (click)="
+                      tempdistrict = '';
+                      temptaluka = '';
+                      tempvillage = '';
+                      tempsociety = ''
+                    "
                     (change)="selectDistrict($event.target.value)"
                     required
-                    ><option value="" disabled>--select--</option>
+                  >
+                    <option *ngIf="!tempdistrict" value="" disabled
+                      >--select--</option
+                    >
+                    <option *ngIf="tempdistrict" value="" disabled>{{
+                      tempdistrict
+                    }}</option>
                     <option
                       *ngFor="let district of District"
                       value="{{ district | json }}"
@@ -143,9 +155,20 @@
                     class="form-control"
                     name="taluka"
                     [(ngModel)]="taluka2"
+                    (click)="
+                      tempdistrict = '';
+                      temptaluka = '';
+                      tempvillage = '';
+                      tempsociety = ''
+                    "
                     (change)="selectTaluka($event.target.value)"
                     required
-                    ><option value="" disabled>--select--</option>
+                    ><option *ngIf="!temptaluka" value="" disabled
+                      >--select--</option
+                    >
+                    <option *ngIf="temptaluka" value="" disabled>{{
+                      temptaluka
+                    }}</option>
                     <option
                       *ngFor="let Taluka of taluka"
                       value="{{ Taluka | json }}"
@@ -165,8 +188,19 @@
                     name="village"
                     [(ngModel)]="village2"
                     (change)="selectVillage($event.target.value)"
+                    (click)="
+                      tempdistrict = '';
+                      temptaluka = '';
+                      tempvillage = '';
+                      tempsociety = ''
+                    "
                     required
-                    ><option value="" disabled>--select--</option>
+                    ><option *ngIf="!tempvillage" value="" disabled
+                      >--select--</option
+                    >
+                    <option *ngIf="tempvillage" value="" disabled>{{
+                      tempvillage
+                    }}</option>
                     <option
                       *ngFor="let Village of village"
                       value="{{ Village | json }}"
@@ -217,7 +251,7 @@
             </div>
             <div class="row">
               <div class="col-md-6">
-                <label>Society/Appartment*</label>
+                <label>Society/Appartment</label>
                 <div class="row">
                   <div class="col-md-10 col-sm-10">
                     <div class="form-group">
@@ -225,8 +259,18 @@
                         class="form-control"
                         name="society"
                         [(ngModel)]="uploadObject.society_appartment"
-                        required
-                        ><option value="" disabled>--select--</option>
+                        (click)="
+                          tempdistrict = '';
+                          temptaluka = '';
+                          tempvillage = '';
+                          tempsociety = ''
+                        "
+                        ><option *ngIf="!tempsociety" value="" disabled
+                          >--select--</option
+                        >
+                        <option *ngIf="tempsociety" value="" disabled>{{
+                          tempsociety
+                        }}</option>
                         <option
                           *ngFor="let Society of societyAppartment"
                           value="{{ Society.societyname }}"
@@ -272,8 +316,14 @@
                     name="notificationsource"
                     [(ngModel)]="source2"
                     (change)="sourceSelect($event.target.value)"
+                    (click)="tempsource = ''"
                     required
-                    ><option value="" disabled>--select--</option>
+                    ><option *ngIf="!tempsource" value="" disabled
+                      >--select--</option
+                    >
+                    <option *ngIf="tempsource" value="" disabled>{{
+                      tempsource
+                    }}</option>
                     <option
                       *ngFor="let newsPaper of newsPapers"
                       value="{{ newsPaper | json }}"

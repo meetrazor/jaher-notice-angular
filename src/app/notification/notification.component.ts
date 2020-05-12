@@ -14,7 +14,8 @@ import { ServicesService } from '../services.service';
 })
 export class NotificationComponent implements OnInit, AfterViewInit {
 
-  constructor(private datepipe: DatePipe, private dialogService: DialogService,
+  constructor(
+    private datepipe: DatePipe, private dialogService: DialogService,
     private service: ServicesService, private toastr: ToastrService) { }
   @ViewChild(DataTableDirective, { static: true })
   dtElement: DataTableDirective;
@@ -31,60 +32,68 @@ export class NotificationComponent implements OnInit, AfterViewInit {
       ajax: { url: `http://qa.api.jahernotice.com/api2/NornalNotice`, dataSrc: '' }, responsive: true,
       columns: [
         {
+          title: 'Sr No.', data: 'row', render: (data, type, row, meta) => {
+            return meta.row + 1;
+          }, className: 'col'
+        },
+        {
           title: 'Publish Date', data: 'publish_date', render: (data) => {
             return this.datepipe.transform(data, 'dd-MM-yyyy');
-          }
+          }, className: 'col'
         }, {
           title: 'Notification Date', data: 'notification_date', render: (data) => {
             return this.datepipe.transform(data, 'dd-MM-yyyy');
-          }
+          }, className: 'col'
         }, {
-          title: 'District', data: 'district'
+          title: 'District', data: 'district', className: 'col'
         }, {
-          title: 'Taluka', data: 'taluka'
+          title: 'Taluka', data: 'taluka', className: 'col'
         }, {
-          title: 'Village', data: 'village'
+          title: 'Village', data: 'village', className: 'col'
         }, {
-          title: 'Survey', data: 'survey'
+          title: 'Survey No /Block No', data: 'survey', className: 'col'
         }, {
-          title: 'T P NO', data: 'tpno'
+          title: 'T P NO', data: 'tpno', className: 'col'
         }, {
-          title: 'F P NO', data: 'fpno'
+          title: 'F P NO', data: 'fpno', className: 'col'
         }, {
-          title: 'Notify By', data: 'notifyby'
+          title: 'Notify By', data: 'notifyby', className: 'col'
         }, {
-          title: 'Society', data: 'society'
+          title: 'Society/ Appartment', data: 'society', className: 'col'
         }, {
-          title: 'Client Name', data: 'client_names'
+          title: 'Client Name', data: 'client_names', className: 'col'
         }, {
-          title: 'Type', data: 'notice_type'
+          title: 'Notice Type', data: 'notice_type', className: 'col'
         }, {
-          title: 'Image', data: 'image_path'
+          title: 'Image', data: 'image_path', className: 'col'
         }, {
-          title: 'Action', data: null
+          title: 'Action', data: null, className: 'col'
         }
-      ],
+      ], autoWidth: false,
+      order: [[0, 'asc'], [1, 'asc']],
+      columnDefs: [{ width: '5%', targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }],
+
 
       rowCallback(row, data: any) {
 
         let deleteBtn = '';
-        deleteBtn += '<a class="btn btn-danger deleteNotice" title="Delete Notice" notice-id="' + data.content_temp_id + '">';
-        deleteBtn += '<i class="fa fa-trash" aria-hidden="true" notice-id="' + data.content_temp_id + '"></i>';
+        deleteBtn += '<a class="btn btn-danger deleteNotice m-1" title="Delete Notice" notice-id="' + data.content_temp_id + '">';
+        deleteBtn += '<i class="fa fa-trash" aria-hidden="false" notice-id="' + data.content_temp_id + '"></i>';
         deleteBtn += '</a>';
 
-        let viewBtn = '<a class="btn btn-success editNotice" title="Edit Notice" notice-id="' + data.content_temp_id + '">';
+        let viewBtn = '<a class="btn btn-success editNotice m-1" title="Edit Notice" notice-id="' + data.content_temp_id + '">';
         viewBtn += '<i class="fa fa-edit" aria-hidden="false" notice-id="' + data.content_temp_id + '"></i></a>';
         // tslint:disable-next-line: max-line-length
-        let image = '<div class="text-center"><img class="img-thumbnail image" src="http://qa.api.jahernotice.com/server%20folder%20path/';
+        let image = '<img class="image" src="http://qa.api.jahernotice.com/server%20folder%20path/';
         image += data.image_path;
-        image += '"style="max-height: 100px; max-width: 50px;"/></div>';
+        image += '" height="100" width="50"/>';
 
         // tslint:disable-next-line: max-line-length
-        let acceptBtn = '<a style="background-color: green" title="Approve Notice"  class="btn btn-primary acceptNotice" notice-id="' + data.content_temp_id + '">';
+        let acceptBtn = '<a style="background-color: green" title="Approve Notice"  class=" btn btn-primary m-1 acceptNotice" notice-id="' + data.content_temp_id + '">';
         acceptBtn += '<i class="fa fa-check" aria-hidden="true" notice-id="' + data.content_temp_id + '"></i></a>';
 
-        $('td:eq(12)', row).html(image);
-        $('td:eq(13)', row).html(acceptBtn + viewBtn + deleteBtn);
+        $('td:eq(13)', row).html(image);
+        $('td:eq(14)', row).html(acceptBtn + viewBtn + deleteBtn);
       },
       drawCallback: () => {
         $('.image').on('click', (e) => {

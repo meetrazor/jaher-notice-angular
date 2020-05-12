@@ -1,3 +1,4 @@
+import { Subscriber } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { ServicesService } from './../services.service';
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
@@ -51,10 +52,16 @@ export class DashboardComponent implements OnInit {
   };
   district2: string;
   taluka2: string;
+  society2: string;
   village2: string;
   source2: any;
   by2: string;
   law2: string;
+  temptaluka: string;
+  tempvillage: string;
+  tempsociety: string;
+  tempsource: string;
+  tempdistrict: string;
   constructor(private service: ServicesService, private toastr: ToastrService, private datePipe: DatePipe) { }
 
   ngOnInit() {
@@ -69,7 +76,6 @@ export class DashboardComponent implements OnInit {
             data[0][key] = '';
           }
         }
-
         this.uploadObject = {
           srno: data[0].srno,
           publish_date: this.datePipe.transform(data[0].publish_date, 'yyyy-MM-dd'),
@@ -81,7 +87,7 @@ export class DashboardComponent implements OnInit {
           fp_no: data[0].fpno,
           society_appartment: '',
           building_plot: data[0].buildingno,
-          notification_source: '',
+          notification_source: data[0].notifysource,
           notification_by: data[0].notifyby,
           client_name: data[0].client_names,
           notice_type: data[0].notice_type,
@@ -91,8 +97,13 @@ export class DashboardComponent implements OnInit {
         };
         this.image += data[0].image_path;
         this.by2 = data[0].notice_type;
-        this.loading = false;
+        this.tempdistrict = data[0].district;
+        this.temptaluka = data[0].taluka;
         this.law2 = data[0].notifyby;
+        this.tempsource = data[0].notifysource;
+        this.tempvillage = data[0].village;
+        this.loading = false;
+        this.tempsociety = data[0].society;
       });
 
     } else {
@@ -115,7 +126,8 @@ export class DashboardComponent implements OnInit {
       for (let i = 0; i < filesAmount; i++) {
         const file = event.target.files[i];
         const mimeType = file.type;
-        if (mimeType.match(/image\/*/) == null) {
+        if (((mimeType.match(/image\/jpg/) == null) && (mimeType.match(/image\/jpeg/) == null))) {
+          this.toastr.error('only jpeg and jpg image support', file.name + ' is invelid image');
           break;
         } else {
           this.imageGallery.push(event.target.files[i]);
@@ -130,8 +142,12 @@ export class DashboardComponent implements OnInit {
     }
   }
   next() {
-    this.index++;
-    this.imageNumber = this.index + 1;
+    if (this.imageNumber > this.URLs.length - 1) {
+
+    } else {
+      this.index++;
+      this.imageNumber = this.index + 1;
+    }
     // this.URLs.shift();
     // // this.selectedImages.nativeElement.value = '';
     // this.imageGallery.shift();
@@ -163,6 +179,9 @@ export class DashboardComponent implements OnInit {
     this.uploadObject.taluka = '';
     this.uploadObject.village = '';
     this.uploadObject.society_appartment = '';
+    this.temptaluka = '';
+    this.tempvillage = '';
+    this.tempsociety = '';
   }
   selectTaluka(taluka) {
     taluka = JSON.parse(taluka);
@@ -173,7 +192,8 @@ export class DashboardComponent implements OnInit {
     this.village2 = '';
     this.uploadObject.village = '';
     this.uploadObject.society_appartment = '';
-
+    this.tempvillage = '';
+    this.tempsociety = '';
   }
 
   selectVillage(village) {
@@ -183,7 +203,7 @@ export class DashboardComponent implements OnInit {
     });
     this.uploadObject.village = village.villagename;
     this.uploadObject.society_appartment = '';
-
+    this.tempsociety = '';
   }
   onChangeSearch(event) {
     if (event) {
@@ -209,6 +229,7 @@ export class DashboardComponent implements OnInit {
     if (value) {
       value = JSON.parse(value);
       this.uploadObject.notification_source = value.papername;
+      this.tempsource = '';
       if (!this.id) {
         // tslint:disable-next-line: max-line-length
         this.uploadObject.image_path = new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate() + '/' + value.shortcode;
@@ -246,10 +267,10 @@ export class DashboardComponent implements OnInit {
   }
   upload() {
     this.uploadObject.image = this.imageGallery[this.index];
-
     // tslint:disable-next-line: max-line-length
-    if ((this.uploadObject.image) && (this.uploadObject.client_name !== '') && (this.uploadObject.district !== '') && (this.uploadObject.image_path !== '') && (this.uploadObject.notice_type !== '') && (this.uploadObject.notification_by !== '') && (this.uploadObject.notification_date !== '') && (this.uploadObject.notification_source !== '') && (this.uploadObject.publish_date !== '') && (this.uploadObject.society_appartment !== '') && (this.uploadObject.taluka !== '') && (this.uploadObject.village !== '')) {
+    if ((this.uploadObject.image) && (this.uploadObject.client_name !== '') && (this.uploadObject.district !== '') && (this.uploadObject.image_path !== '') && (this.uploadObject.notice_type !== '') && (this.uploadObject.notification_by !== '') && (this.uploadObject.notification_date !== '') && (this.uploadObject.notification_source !== '') && (this.uploadObject.publish_date !== '') && (this.uploadObject.taluka !== '') && (this.uploadObject.village !== '')) {
       this.service.uploadNotice(this.uploadObject).subscribe(Response => {
+
         if (Response.message === 'Data successfully saved') {
           this.toastr.success(Response.message, 'Success');
           this.reset();
@@ -299,13 +320,38 @@ export class DashboardComponent implements OnInit {
 
   update() {
     // tslint:disable-next-line: max-line-length
-    if (((this.uploadObject.image) || (this.image)) && (this.uploadObject.client_name) && (this.uploadObject.district) && (this.uploadObject.image_path) && (this.uploadObject.notice_type) && (this.uploadObject.notification_by) && (this.uploadObject.notification_date) && (this.uploadObject.notification_source) && (this.uploadObject.publish_date) && (this.uploadObject.society_appartment) && (this.uploadObject.taluka) && (this.uploadObject.village)) {
+    if ((this.uploadObject.district === null) || (this.uploadObject.taluka === null) || (this.uploadObject.village === null)) {
+      this.uploadObject.district = this.tempdistrict;
+      this.uploadObject.taluka = this.temptaluka;
+      this.uploadObject.village = this.tempvillage;
+    }
+    if (this.uploadObject.notification_source === '') {
+      this.uploadObject.notification_source = this.source2;
+    }
+    if (this.uploadObject.society_appartment === '') {
+      this.uploadObject.society_appartment = null;
+    }
+    if (this.uploadObject.fp_no === '') {
+      this.uploadObject.fp_no = null;
+    }
+    if (this.uploadObject.tp_no === '') {
+      this.uploadObject.tp_no = null;
+    }
+    if (this.uploadObject.survey_block_no === '') {
+      this.uploadObject.survey_block_no = null;
+    }
+    if (this.uploadObject.building_plot === '') {
+      this.uploadObject.building_plot = null;
+    }
+    // tslint:disable-next-line: max-line-length
+    if (((this.uploadObject.image) || (this.image)) && (this.uploadObject.client_name) && (this.uploadObject.district) && (this.uploadObject.image_path) && (this.uploadObject.notice_type) && (this.uploadObject.notification_by) && (this.uploadObject.notification_date) && (this.uploadObject.notification_source) && (this.uploadObject.publish_date) && (this.uploadObject.taluka) && (this.uploadObject.village)) {
       this.service.updateNotice(this.uploadObject, this.id).subscribe((res) => {
         if (res.message === 'Data successfully updated') {
           this.toastr.success(res.message, 'Success');
           this.closePopUp('refresh');
         } else {
-          this.toastr.error(res.message, 'Error');
+          this.toastr.error('Error');
+
         }
       });
     } else {

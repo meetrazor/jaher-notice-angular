@@ -54,7 +54,7 @@ export class LawyerComponent implements OnInit {
   submit() {
 
     // tslint:disable-next-line: max-line-length
-    if ((this.uploadObject.name) && (this.uploadObject.address) && (this.uploadObject.contact_no) && (this.uploadObject.district) && (this.uploadObject.email) && (this.uploadObject.pincode)) {
+    if ((this.uploadObject.name) && (this.uploadObject.district)) {
       this.service.addnewLawyer(this.uploadObject).subscribe((r) => {
         this.toastr.success(r.message, 'Success');
         console.log(r);
