@@ -30,7 +30,7 @@
     "angular-ng-autocomplete": "^2.0.1",
     "bootstrap-essentials": "^0.7.1",
     "bootstrap-sass": "^3.4.1",
-    "datatables.net": "^1.10.20",
+    "datatables.net": "^1.11.3",
     "datatables.net-dt": "^1.10.20",
     "font-awesome": "^4.7.0",
     "ionicons": "^5.0.1",
