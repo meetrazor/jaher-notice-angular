@@ -36,7 +36,7 @@
     "ionicons": "^5.0.1",
     "jquery": "^3.5.0",
     "ngx-toastr": "^11.3.3",
-    "read-excel-file": "^4.0.6",
+    "read-excel-file": "^4.1.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
